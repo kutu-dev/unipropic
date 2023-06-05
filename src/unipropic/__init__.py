@@ -1,6 +1,6 @@
-__version__: str = '1.0.1'
+__version__: str = '1.1.0'
 APP_NAME: str = 'Universal Profile Picture'
-MINIFIED_APP_NAME = "unipropic"
+MINIFIED_APP_NAME = 'unipropic'
 
 # Disable visible download progress bar of webdriver_manager
 import os
