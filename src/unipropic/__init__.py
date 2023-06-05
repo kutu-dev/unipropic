@@ -1,4 +1,4 @@
-__version__: str = '1.0.0'
+__version__: str = '1.0.1'
 APP_NAME: str = 'Universal Profile Picture'
 MINIFIED_APP_NAME = "unipropic"
 
