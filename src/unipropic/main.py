@@ -1,3 +1,4 @@
+import sys
 from . import __version__, APP_NAME, MINIFIED_APP_NAME
 from .messages import Messages
 from .config_manager import ConfigManager
@@ -147,13 +148,16 @@ def main() -> None:
         if active_services == None or len(active_services) == 0 or args.select_services or args.temporal_services:
             available_services = list(handler.services.keys())
 
-            active_services = inquirer.prompt([
-                inquirer.Checkbox(
-                'selected_services',
-                'Which services you want to automatize?',
-                available_services
-               )
-            ])['selected_services']
+            try:
+                active_services: str = inquirer.prompt([
+                    inquirer.Checkbox(
+                    'selected_services',
+                    'Which services you want to automatize?',
+                    available_services
+                   )
+                ])['selected_services']
+            except TypeError:
+                sys.exit(1)
 
             if len(active_services) == 0:
                 Messages.error('No services has been selected')

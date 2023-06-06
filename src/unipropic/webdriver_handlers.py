@@ -1,3 +1,5 @@
+from configparser import ConfigParser
+import sys
 from .config_manager import ConfigManager
 from .messages import Messages
 import platform
@@ -34,7 +36,7 @@ class ProfilePictureHandler(ABC):
         self.driver = self.create_driver()
 
         # Create wait object with a timeout of 20 seconds
-        self.wait = WebDriverWait(self.driver, 20)
+        self.wait = WebDriverWait(self.driver, 20, poll_frequency=1)
 
         self.services: dict[str, Callable] = {
             'Reddit': self.change_in_reddit,
@@ -382,6 +384,8 @@ class ProfilePictureHandler(ABC):
 
         self.driver.get('https://anilist.co/settings')
 
+        time.sleep(1)
+
         picture_input = self.driver.find_element(By.XPATH, '//input[@name="avatar"]')
         picture_input.send_keys(self.profile_picture_path)
 
@@ -395,6 +399,8 @@ class ProfilePictureHandler(ABC):
         self.driver.get('https://www.serializd.com/settings')
 
         self.wait.until(EC.element_to_be_clickable((By.XPATH, '//img[@class="avatar-image"]')))
+
+        time.sleep(1)
 
         picture_input = self.driver.find_element(By.XPATH, '//input[@type="file"]')
         picture_input.send_keys(self.profile_picture_path)
@@ -448,12 +454,19 @@ class ProfilePictureHandler(ABC):
 
         self.driver.get('https://www.icloud.com/settings/')
 
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, '//ui-button[text() = "Change Apple ID Photo"]'))).click()
+        time.sleep(1)
 
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, '//ui-button[text()[contains(.,"Change Apple ID Photo")]]'))).click()
+
+        print(2)
         picture_input = self.driver.find_element(By.XPATH, '//input[@type="file"]')
         picture_input.send_keys(self.profile_picture_path)
 
+        time.sleep(1)
+
+        print(3)
         self.wait.until(EC.element_to_be_clickable((By.XPATH, '//ui-button[text() = "Save"]'))).click()
+        print(4)
         self.wait.until_not(EC.element_to_be_clickable((By.XPATH, '//ui-button[text() = "Save"]')))
 
     @service_with_result('Xiaomi')
@@ -470,12 +483,12 @@ class ProfilePictureHandler(ABC):
         picture_input.send_keys(self.profile_picture_path)
 
         # Wait for the animation to end
-        time.sleep(1)
+        time.sleep(2)
 
         self.wait.until(EC.element_to_be_clickable((By.XPATH, '//button[text() = "Submit"]'))).click()
 
         # Wait for the animation to end
-        time.sleep(1)
+        time.sleep(2)
 
         self.wait.until(EC.element_to_be_clickable((By.XPATH, '//button[text() = "Save"]'))).click()
 
@@ -500,7 +513,7 @@ class FirefoxProfilePictureHandler(ProfilePictureHandler):
                     'Roaming',
                     'Mozilla',
                     'Firefox',
-                    'Profiles'
+                    'Profiles',
                 )
             case 'Darwin':
                 return Path(
@@ -508,28 +521,39 @@ class FirefoxProfilePictureHandler(ProfilePictureHandler):
                     'Library',
                     'Application Support',
                     'Firefox',
-                    'Profiles'
+                    'Profiles',
                 )
             case _:
                 return Path(
                     Path.home(),
                     '.mozilla',
-                    'firefox'
+                    'firefox',
                 )
 
-    def get_firefox_profiles(self) -> list[Path]:
+    def get_firefox_profiles(self) -> list[str]:
         """Return a list to the paths to all the firefox profiles that has been found"""
 
-        profiles_path = self.get_firefox_profiles_path()
+        profiles_file_path: Path = Path(self.get_firefox_profiles_path(), 'profiles.ini')
 
-        if not profiles_path.is_dir():
+        if not profiles_file_path.is_file():
             return []
-        
-        profiles = [profile.name for profile in profiles_path.glob('*')]
 
-        profiles.remove('.DS_Store')
+        profiles_data: ConfigParser = ConfigParser()
+        profiles_data.read(profiles_file_path)
 
-        return profiles
+        profiles_paths: list[str] = []
+
+        for i in profiles_data:
+            if ('Locked', '1') in profiles_data[i].items():
+                continue
+
+            if not 'Path' in profiles_data[i]:
+                continue
+
+            profiles_data[i].items()
+            profiles_paths.append(profiles_data[i]['Path'])
+
+        return profiles_paths
 
     def ask_for_profile_path(self) -> str:
         """Ask for a valid directory to be used as a profile path"""
@@ -550,13 +574,16 @@ class FirefoxProfilePictureHandler(ProfilePictureHandler):
             Messages.warn('No Firefox profile has been found, please enter it manually')
             return self.ask_for_profile_path()
 
-        selected_profile: str = inquirer.prompt([
-            inquirer.List(
-                'selected_profile',
-                'Please select a Firefox profile',
-                choices=firefox_profiles
-            )
-        ])['selected_profile']
+        try:
+            selected_profile: str = inquirer.prompt([
+                inquirer.List(
+                    'selected_profile',
+                    'Please select a Firefox profile',
+                    choices=firefox_profiles
+                )
+            ])['selected_profile']
+        except TypeError:
+                sys.exit(1)
 
         if selected_profile == 'Manually select profile path...':
             return self.ask_for_profile_path()
@@ -574,7 +601,12 @@ class FirefoxProfilePictureHandler(ProfilePictureHandler):
 
         Messages.info('Starting Firefox Webdriver...')
 
-        firefox_profile_path: Path | None = Path(self.config_manager.get_value_by_key('firefox'))
+        firefox_profile_path: Path | None
+
+        try:
+            firefox_profile_path = Path(self.config_manager.get_value_by_key('firefox'))
+        except TypeError:
+            firefox_profile_path = None
 
         if firefox_profile_path == None or not firefox_profile_path.is_dir() or self.forger_config:
             firefox_profile_path = Path(self.get_firefox_profiles_path(), self.ask_for_profile())
