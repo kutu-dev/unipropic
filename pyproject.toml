@@ -7,7 +7,6 @@ license = "MIT License"
 readme = "README.md"
 keywords = ["web", "utility", "automation", "profile"]
 homepage = "https://github.com/kutu-dev/unipropic"
-repository = "https://github.com/kutu-dev/unipropic"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Operating System :: OS Independent",
