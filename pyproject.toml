@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "unipropic"
-version = "1.1.1"
+version = "1.1.2"
 description = "A CLI app that automatically puts a profile image in all your accounts."
 authors = ["kutu-dev"]
 license = "MIT License"
