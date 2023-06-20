@@ -20720,3 +20720,38 @@ console.warn: LoginRecipes: "Falling back to a synchronous message for: https://
 [Child 14346, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (Conduits, ConduitClosed) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
 [Child 14346, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (Conduits, ConduitClosed) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
 [Child 14346, Main Thread] WARNING: JSWindowActorChild::SendRawMessage (Conduits, ConduitClosed) not sent: !CanSend() || !mManager || !mManager->CanSend(): file /builds/worker/checkouts/gecko/dom/ipc/jsactor/JSWindowActorChild.cpp:57
+1687304071485	geckodriver	INFO	Listening on 127.0.0.1:32783
+1687304090281	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/usr ... te" "--remote-debugging-port" "54689" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileUiDN69"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1687304090843	Marionette	INFO	Marionette enabled
+1687304090847	Marionette	INFO	Listening on port 46545
+Read port: 46545
+WebDriver BiDi listening on ws://127.0.0.1:54689
+1687304090959	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:54689/devtools/browser/ec3e667c-06a5-426c-8c8a-3170965d957a
+JavaScript error: moz-extension://658384e5-bfe4-43b1-82ee-ada4e1cfa836/js/contentscripts/utils.js, line 22: SecurityError: Permission denied to access property "document" on cross-origin object
+JavaScript error: moz-extension://658384e5-bfe4-43b1-82ee-ada4e1cfa836/js/contentscripts/clobbercookie.js, line 22: SecurityError: Permission denied to access property "document" on cross-origin object
+JavaScript error: moz-extension://658384e5-bfe4-43b1-82ee-ada4e1cfa836/js/contentscripts/clobberlocalstorage.js, line 22: SecurityError: Permission denied to access property "document" on cross-origin object
+JavaScript error: moz-extension://658384e5-bfe4-43b1-82ee-ada4e1cfa836/js/contentscripts/dnt.js, line 22: SecurityError: Permission denied to access property "document" on cross-origin object
+JavaScript error: moz-extension://658384e5-bfe4-43b1-82ee-ada4e1cfa836/js/contentscripts/fingerprinting.js, line 25: SecurityError: Permission denied to access property "document" on cross-origin object
+JavaScript error: moz-extension://658384e5-bfe4-43b1-82ee-ada4e1cfa836/js/contentscripts/utils.js, line 22: SecurityError: Permission denied to access property "document" on cross-origin object
+JavaScript error: moz-extension://658384e5-bfe4-43b1-82ee-ada4e1cfa836/js/contentscripts/clobbercookie.js, line 22: SecurityError: Permission denied to access property "document" on cross-origin object
+JavaScript error: moz-extension://658384e5-bfe4-43b1-82ee-ada4e1cfa836/js/contentscripts/clobberlocalstorage.js, line 22: SecurityError: Permission denied to access property "document" on cross-origin object
+JavaScript error: moz-extension://658384e5-bfe4-43b1-82ee-ada4e1cfa836/js/contentscripts/dnt.js, line 22: SecurityError: Permission denied to access property "document" on cross-origin object
+JavaScript error: moz-extension://658384e5-bfe4-43b1-82ee-ada4e1cfa836/js/contentscripts/fingerprinting.js, line 25: SecurityError: Permission denied to access property "document" on cross-origin object
+JavaScript error: moz-extension://1e313554-b2b2-4309-97da-07f9c60c30d4/js/vapi.js, line 1: SecurityError: Permission denied to access property "vAPI" on cross-origin object
+JavaScript error: moz-extension://1e313554-b2b2-4309-97da-07f9c60c30d4/js/vapi-client.js, line 34: SecurityError: Permission denied to access property "vAPI" on cross-origin object
+JavaScript error: moz-extension://1e313554-b2b2-4309-97da-07f9c60c30d4/js/contentscript.js, line 107: SecurityError: Permission denied to access property "vAPI" on cross-origin object
+JavaScript error: resource://gre/modules/ExtensionContent.jsm, line 593: TypeError: PrecompiledScript.executeInGlobal: Argument 1 is not an object.
+JavaScript error: resource://gre/modules/ExtensionContent.jsm, line 593: TypeError: PrecompiledScript.executeInGlobal: Argument 1 is not an object.
+JavaScript error: resource://gre/modules/ExtensionContent.jsm, line 593: TypeError: PrecompiledScript.executeInGlobal: Argument 1 is not an object.
+JavaScript error: resource://gre/modules/ExtensionContent.jsm, line 593: TypeError: PrecompiledScript.executeInGlobal: Argument 1 is not an object.
+1687304097304	Marionette	INFO	Stopped listening on port 46545
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.

@@ -617,9 +617,9 @@ class FirefoxProfilePictureHandler(ProfilePictureHandler):
         service: FirefoxService = FirefoxService(GeckoDriverManager().install())
         options: webdriver.FirefoxOptions = webdriver.FirefoxOptions()
         options.binary_location = self.binary_path
-        profile: webdriver.FirefoxProfile = webdriver.FirefoxProfile(firefox_profile_path)
+        options.profile = webdriver.FirefoxProfile(firefox_profile_path)
 
-        return webdriver.Firefox(service=service, options=options, firefox_profile=profile)
+        return webdriver.Firefox(service=service, options=options)
 
 class ChromeVariant(Enum):
     GOOGLE = {'display_name': 'Chrome', 'chrome_type': ChromeType.GOOGLE}
